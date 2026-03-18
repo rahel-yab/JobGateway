@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "pI3udfoMgjsjriIkmO6ok3JryE4f2/EnDNwNPFzJy5O/z+Un0Rahb5DhovV75WIiKNR8+Is4IYrvmrahcwbC9A==",
+  "success": true,
+  "projectFilePath": "/home/rahel/JobGateway/JobGateway.Api/JobGateway.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/rahel/.nuget/packages/system.io.hashing/8.0.0/system.io.hashing.8.0.0.nupkg.sha512",
+    "/home/rahel/.nuget/packages/yarp.reverseproxy/2.3.0/yarp.reverseproxy.2.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
