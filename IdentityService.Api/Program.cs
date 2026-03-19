@@ -1,6 +1,25 @@
+using IdentityService.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add the connection string to configuration
+builder.Configuration["ConnectionStrings:MongoDb"] = "mongodb://localhost:27017";
+
+// Register our AuthService
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+// Register Endpoint
+app.MapPost("/register", async (AuthService auth, string username, string password) => {
+    var result = await auth.Register(username, password);
+    return result != null ? Results.Ok(result) : Results.BadRequest("User exists");
+});
+
+// Login Endpoint
+app.MapPost("/login", async (AuthService auth, string username, string password) => {
+    var token = await auth.Login(username, password);
+    return token != null ? Results.Ok(new { Token = token }) : Results.Unauthorized();
+});
 
 app.Run();
