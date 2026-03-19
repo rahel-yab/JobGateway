@@ -5,3 +5,5 @@
 /JobGateway.Application/obj
 /JobGateway.Domain/bin
 /JobGateway.Domain/obj
+/IdentityService/obj
+/IdentityService/bin
