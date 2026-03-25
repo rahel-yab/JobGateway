@@ -1,9 +1,4 @@
 .vscode
-/JobGateway.Api/bin
-/JobGateway.Api/obj
-/JobGateway.Application/bin
-/JobGateway.Application/obj
-/JobGateway.Domain/bin
-/JobGateway.Domain/obj
-/IdentityService/obj
-/IdentityService/bin
+# Ignore .NET build output directories in all projects
+**/bin/
+**/obj/
