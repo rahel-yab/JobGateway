@@ -1,6 +1,6 @@
 using IdentityService.Api.Models;
-using MongoDB.Driver;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -10,7 +10,7 @@ namespace IdentityService.Api.Services;
 public class AuthService
 {
     private readonly IMongoCollection<User> _users;
-    private readonly string _jwtSecret = "YourSuperSecretKey123!_DoNotShare"; // Match this with Gateway!
+    private readonly string _jwtSecret = "YourSuperSecretKey123!_DoNotShare";
 
     public AuthService(IConfiguration config)
     {
@@ -22,9 +22,13 @@ public class AuthService
     public async Task<string?> Register(string username, string password)
     {
         var existingUser = await _users.Find(u => u.Username == username).FirstOrDefaultAsync();
-        if (existingUser != null) return null;
+        if (existingUser != null)
+        {
+            return null;
+        }
 
-        var user = new User {
+        var user = new User
+        {
             Username = username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
         };
@@ -37,7 +41,9 @@ public class AuthService
     {
         var user = await _users.Find(u => u.Username == username).FirstOrDefaultAsync();
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+        {
             return null;
+        }
 
         return GenerateJwtToken(user);
     }
@@ -52,8 +58,11 @@ public class AuthService
             Expires = DateTime.UtcNow.AddHours(2),
             Issuer = "JobGateway",
             Audience = "JobGatewayUsers",
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
         };
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
